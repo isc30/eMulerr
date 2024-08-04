@@ -42,19 +42,19 @@ Add eMulerr as a dependency for Radarr, Sonarr, etc:
 
 In order to get started, configure the Download Client in *RR:
 
-- Type: qBittorrent
-- Name: emulerr
-- Host: emulerr
-- Port: 3000
-- Priority: 50
-- Remove completed: Yes
+- Type: `qBittorrent`
+- Name: `emulerr`
+- Host: `emulerr`
+- Port: `3000`
+- Priority: `50`
+- Remove completed: `Yes`
 
 Then, configure the indexer in *RR:
 
-- Type: Torznab
-- Name: emulerr
-- RSS: No
-- Automatic Search: Up to you, maybe it downloads porn
-- Interactive Search: Yes
-- URL: http://emulerr:3000/
-- Download Client: emulerr
+- Type: `Torznab`
+- Name: `emulerr`
+- RSS: `No`
+- Automatic Search: `No`
+- Interactive Search: `Yes`
+- URL: `http://emulerr:3000/`
+- Download Client: `emulerr`
