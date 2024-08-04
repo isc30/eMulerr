@@ -16,13 +16,13 @@ emulerr:
     - PUID=1000
     - PGID=1000
     - PORT=3000 # optional, default=3000
-    - ED2K_PORT=4762 # optional, default=4662
+    - ED2K_PORT=4662 # optional, default=4662
     - LOG_LEVEL=info # optional, default=info
   ports:
     - "3000:3000" # web ui
-    - "4662:4662" # ed2k tcp
-    - "4665:4665/udp" # ed2k global search udp (tcp port +3)
-    - "4672:4672/udp" # ed2k udp
+    - "4662:4662" # optional, ed2k tcp
+    - "4662:4662/udp" # optional, ed2k udp
+    - "4665:4665/udp" # optional, ed2k global search udp (tcp port +3)
   volumes:
     - ./config:/config # required
     - ./downloads:/downloads # required
