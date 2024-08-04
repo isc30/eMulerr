@@ -31,7 +31,7 @@ emulerr:
 Add eMulerr as a dependency for Radarr, Sonarr, etc:
 
 ```diff
-  radarr:
+ radarr:
    image: lscr.io/linuxserver/radarr:latest
 +  depends_on:
 +    emulerr:
