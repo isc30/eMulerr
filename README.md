@@ -44,8 +44,8 @@ In order to get started, configure the Download Client in *RR:
 
 - Type: qBittorrent
 - Name: emulerr
-- Host: THIS_CONTAINER_NAME
-- Port: 3001
+- Host: emulerr
+- Port: 3000
 - Priority: 50
 - Remove completed: Yes
 
@@ -56,5 +56,5 @@ Then, configure the indexer in *RR:
 - RSS: No
 - Automatic Search: Up to you, maybe it downloads porn
 - Interactive Search: Yes
-- URL: http://THIS_CONTAINER_NAME:3001/
+- URL: http://emulerr:3000/
 - Download Client: emulerr
