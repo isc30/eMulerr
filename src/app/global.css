@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    touch-action: manipulation; /* disable double tap zoom */
+    -webkit-tap-highlight-color: transparent; /* no black overlay on tap target */
+    overflow-wrap: break-word; /* avoid overflows caused by long words */
+    word-break: break-word; /* avoid overflows caused by long words */
+    user-select: none; /* avoid text being selectable */
+    -webkit-user-select: none; /* avoid text being selectable */
+    min-width: 0; /* some input elements have min-width by browser defaults */
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-display: fallback;
+    src: local("Roboto"), url("/Roboto.ttf");
+  }
+}
+
+@layer components {
+  html,
+  body {
+    @apply font-body bg-neutral-900 text-neutral-50;
+  }
+
+  input,
+  select {
+    @apply rounded-sm border border-neutral-600 bg-neutral-700 px-2 py-1 text-base text-white;
+  }
+
+  h1,
+  .h1 {
+    @apply text-3xl font-medium;
+  }
+
+  h2,
+  .h2 {
+    @apply text-xl font-medium underline underline-offset-8;
+  }
+
+  *:disabled,
+  [data-disabled="true"] {
+    @apply pointer-events-none opacity-50;
+  }
+}
