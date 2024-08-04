@@ -2,7 +2,7 @@
 
 Seamless integration for eD2k/KAD (eMule) networks and *RR, enjoy.
 
-## How to use it
+## Running the container
 
 Add the following service to your docker-compose:
 
@@ -37,3 +37,24 @@ Add eMulerr as a dependency for Radarr, Sonarr, etc:
 +    emulerr:
 +      condition: service_healthy
 ```
+
+## Configuring *rr
+
+In order to get started, configure the Download Client in *RR:
+
+- Type: qBittorrent
+- Name: emulerr
+- Host: THIS_CONTAINER_NAME
+- Port: 3001
+- Priority: 50
+- Remove completed: Yes
+
+Then, configure the indexer in *RR:
+
+- Type: Torznab
+- Name: emulerr
+- RSS: No
+- Automatic Search: Up to you, maybe it downloads porn
+- Interactive Search: Yes
+- URL: http://THIS_CONTAINER_NAME:3001/
+- Download Client: emulerr
