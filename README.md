@@ -1,6 +1,6 @@
 # eMulerr
 
-Seamless integration for eD2k/KAD (eMule) networks and *RR, enjoy.
+Seamless integration for eD2k/KAD (eMule) networks and Radarr/Sonarr, enjoy.
 
 ## Running the container
 
