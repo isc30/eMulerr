@@ -20,8 +20,8 @@ emulerr:
     - LOG_LEVEL=info # optional, default=info
   ports:
     - "3000:3000" # web ui
-    - "4662:4662" # optional, ed2k tcp
-    - "4662:4662/udp" # optional, ed2k udp
+    - "4662:4662" # ed2k tcp
+    - "4662:4662/udp" # ed2k udp
     - "4665:4665/udp" # optional, ed2k global search udp (tcp port +3)
   volumes:
     - ./config:/config # required
