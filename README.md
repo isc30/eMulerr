@@ -50,7 +50,13 @@ In order to get started, configure the Download Client in *RR:
 - Priority: `50`
 - Remove completed: `Yes`
 
-Then, configure the indexer in *RR:
+Also set the Download Client's `Remote Path Mappings`:
+
+- Host: `emulerr`
+- Remote Path: `/downloads`
+- Local Path: {The /downloads folder inside MOUNTED PATH FOR RADARR}
+
+Then, add a new Indexer in *RR:
 
 - Type: `Torznab`
 - Name: `emulerr`
