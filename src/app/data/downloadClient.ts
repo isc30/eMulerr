@@ -17,7 +17,7 @@ export const metadataDb = createJsonDb<
 
 export const getDownloadClientFiles = staleWhileRevalidate(async function () {
   const uploads = await amuleGetUploads()
-  const downloads = await amuleGetDownloads()
+  const downloads = [...await amuleGetDownloads()]
   const shared = (await amuleGetShared())
     .filter(
       (f) => !downloads.some((d) => d.hash === f.hash)

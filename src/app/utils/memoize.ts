@@ -4,7 +4,7 @@ import pMemoize, { AnyAsyncFunction } from "p-memoize"
 import { deepCopy } from "deep-copy-ts"
 import stringify from "json-stable-stringify"
 import { Mutex } from "async-mutex"
-import { deepFreeze } from "./state"
+import { deepFreeze, DeepReadonly } from "./state"
 export const deterministicStringify = stringify
 
 class CustomExpiryMap<K = any, V = any> extends ExpiryMap<K, V> {
@@ -60,7 +60,7 @@ export function staleWhileRevalidate<A extends any[], R>(
     expired?: number,
     debug?: boolean
   } = {}
-): typeof fn {
+): (...args: A) => Promise<DeepReadonly<R>> {
   const { shouldCache, stalled = 500, expired = stalled * 20 } = options
 
   const cache = new Map<
