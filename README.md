@@ -48,8 +48,8 @@ In order to get started, configure the Download Client in *RR:
 - Name: `emulerr`
 - Host: `emulerr`
 - Port: `3000`
-- Username (optional): `emulerr`
-- Password (optional): `PASSWORD from environment variable`
+- Username (if using PASSWORD): `emulerr`
+- Password (if using PASSWORD): `PASSWORD` (from environment variable)
 - Priority: `50`
 - Remove completed: `Yes`
 
@@ -67,5 +67,5 @@ Then, add a new Indexer in *RR:
 - Automatic Search: `No`
 - Interactive Search: `Yes`
 - URL: `http://emulerr:3000/`
-- API Key (optional): `PASSWORD from environment variable`
+- API Key (if using PASSWORD): `PASSWORD` (from environment variable)
 - Download Client: `emulerr`
