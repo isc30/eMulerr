@@ -46,7 +46,7 @@ if (viteDevServer) {
 app.use(express.static("build/client", { maxAge: "1h" }))
 
 // password
-if (process.env.PASSWORD != null) {
+if (process.env.PASSWORD !== "") {
   const authMiddleware = basicAuth({
     users: { emulerr: process.env.PASSWORD },
     challenge: true,

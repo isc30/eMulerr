@@ -4,7 +4,7 @@ export const action = (async ({ request }) => {
   const formData = await request.formData()
   const password = formData.get("password")
 
-  if (process.env.PASSWORD && process.env.PASSWORD !== password) {
+  if (process.env.PASSWORD !== "" && process.env.PASSWORD !== password) {
     return new Response(``, {
       status: 401,
       headers: {
