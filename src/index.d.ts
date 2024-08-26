@@ -7,6 +7,7 @@ declare global {
             PGID: string;
             PORT: string;
             ED2K_PORT: string;
+            PASSWORD?: string;
         }
     }
 }

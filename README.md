@@ -19,6 +19,7 @@ services:
       - PORT=3000 # optional, default=3000
       - ED2K_PORT=4662 # optional, default=4662
       - LOG_LEVEL=info # optional, default=info
+      - PASSWORD=1234 # optional, user=emulerr
     ports:
       - "3000:3000" # web ui
       - "4662:4662" # ed2k tcp
@@ -47,6 +48,8 @@ In order to get started, configure the Download Client in *RR:
 - Name: `emulerr`
 - Host: `emulerr`
 - Port: `3000`
+- Username (optional): `emulerr`
+- Password (optional): `PASSWORD from environment variable`
 - Priority: `50`
 - Remove completed: `Yes`
 
@@ -64,4 +67,5 @@ Then, add a new Indexer in *RR:
 - Automatic Search: `No`
 - Interactive Search: `Yes`
 - URL: `http://emulerr:3000/`
+- API Key (optional): `PASSWORD from environment variable`
 - Download Client: `emulerr`

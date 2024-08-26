@@ -30,6 +30,7 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV ED2K_PORT=4662
 ENV LOG_LEVEL=info
+ENV PASSWORD=
 RUN mkdir -p /emulerr
 WORKDIR /emulerr
 ADD ./src/package.json ./src/package-lock.json ./
