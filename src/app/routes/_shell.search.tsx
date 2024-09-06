@@ -125,49 +125,37 @@ function DownloadResult({
         <span>
           <UserIcon /> {r.sources}
         </span>
-        {!present ? (
-          <select
-            className="w-40 border px-2 py-1"
-            defaultValue="pick"
-            onChange={(ev) => {
-              if (ev.target.value === "$$new$$") {
-                const cat = prompt("Enter the name of the new category")
-                if (!cat) {
-                  ev.target.value = "pick"
-                  return
-                }
-                ev.target.options[ev.target.options.length] = new Option(
-                  cat,
-                  cat
-                )
-                ev.target.value = cat
+        <select
+          className="w-40 border px-2 py-1"
+          defaultValue="pick"
+          onChange={(ev) => {
+            if (ev.target.value === "$$new$$") {
+              const cat = prompt("Enter the name of the new category")
+              if (!cat) {
+                ev.target.value = "pick"
+                return
               }
+              ev.target.options[ev.target.options.length] = new Option(cat, cat)
+              ev.target.value = cat
+            }
 
-              fetcher.submit(ev.target.form)
-            }}
-            name="category"
-            disabled={fetcher.state !== "idle"}
-          >
-            <option value="pick" disabled>
-              -- Download --
+            fetcher.submit(ev.target.form)
+          }}
+          name="category"
+          disabled={fetcher.state !== "idle"}
+        >
+          <option value="pick" disabled>
+            -- Download --
+          </option>
+          <hr />
+          {categories.map((c) => (
+            <option key={c} value={c}>
+              {c}
             </option>
-            <hr />
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-            <hr />
-            <option value="$$new$$">Create new category...</option>
-          </select>
-        ) : (
-          <div
-            className="text-right sm:w-40"
-            title={`Grabbed as:${names.map((n) => `\n\t- ${n}`).join("")}`}
-          >
-            Already in Downloads
-          </div>
-        )}
+          ))}
+          <hr />
+          <option value="$$new$$">Create new category...</option>
+        </select>
       </div>
     </fetcher.Form>
   )
