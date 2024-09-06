@@ -2,6 +2,8 @@
 
 Seamless integration for eD2k/KAD (eMule) networks and Radarr/Sonarr, enjoy.
 
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/isc30/emulerr)
+
 ## Running the container
 
 Add the following service to your docker-compose:
