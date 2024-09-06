@@ -51,7 +51,6 @@ In order to get started, configure the Download Client in *RR:
 - Username (if using PASSWORD): `emulerr`
 - Password (if using PASSWORD): `PASSWORD` (from environment variable)
 - Priority: `50`
-- Remove completed: `Yes`
 
 Also set the Download Client's `Remote Path Mappings`:
 
