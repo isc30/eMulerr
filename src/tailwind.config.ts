@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import * as colors from "tailwindcss/colors";
 import * as defaultTheme from "tailwindcss/defaultTheme";
 import { tailwindcssPaletteGenerator as palette } from '@bobthered/tailwindcss-palette-generator'
+import plugin from "tailwindcss/plugin"
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
@@ -30,5 +31,12 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("hover", [
+        "@media (hover: hover) { &:hover }",
+        "@media (hover: none) { &:active }",
+      ])
+    }),
+  ],
 } satisfies Config;

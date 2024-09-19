@@ -5,6 +5,7 @@ import {
   json,
   useFetcher,
   useLoaderData,
+  useNavigate,
   useOutlet,
 } from "@remix-run/react"
 import { PropsWithChildren, useState } from "react"
@@ -16,8 +17,8 @@ import { DownloadIcon } from "~/icons/downloadIcon"
 import { SearchIcon } from "~/icons/searchIcon"
 import { UpIcon } from "~/icons/upIcon"
 import { DownIcon } from "~/icons/downIcon"
-import { LibraryIcon } from "~/icons/libraryIcon"
-import { DiscoverIcon } from "~/icons/discoverIcon"
+import { AddIcon } from "~/icons/addIcon"
+import { getCategories } from "~/data/categories"
 
 export const action = (async ({ request }) => {
   void restartAmule().catch(() => {})
@@ -34,6 +35,7 @@ export const loader = (async () => {
     speed_down: stats.speed_down ?? 0,
     ed2kPort,
     time: new Date(),
+    categories: await getCategories(),
   })
 }) satisfies LoaderFunction
 
@@ -41,6 +43,7 @@ export default function Layout() {
   const fetcher = useFetcher<typeof loader>()
   const data = useLoaderData<typeof loader>()
   const outlet = useOutlet()
+  const navigate = useNavigate()
   const [menuHidden, setMenuHidden] = useState(true)
 
   useRevalidate(true, 1000)
@@ -151,7 +154,7 @@ export default function Layout() {
         onClick={() => setMenuHidden(true)}
       ></div>
       <nav
-        className="fixed top-[60px] z-40 h-full w-[250px] bg-neutral-800 max-sm:transition-transform max-sm:data-[hidden=true]:-translate-x-full"
+        className="fixed top-[60px] z-40 flex h-[calc(100%-60px)] w-[250px] flex-col bg-neutral-800 max-sm:transition-transform max-sm:data-[hidden=true]:-translate-x-full"
         data-hidden={menuHidden}
       >
         <StyledNavLink to="/?index" onClick={() => setMenuHidden(true)}>
@@ -169,6 +172,36 @@ export default function Layout() {
         <StyledNavLink to="/search" onClick={() => setMenuHidden(true)}>
           <SearchIcon /> Search
         </StyledNavLink>
+        <div className="grow"></div>
+        <button
+          className="m-4 flex items-center justify-center gap-2 rounded-md border-2 border-neutral-600 bg-neutral-300 p-4 font-medium leading-none text-neutral-900 lg:gap-4"
+          onClick={() => {
+            const link = prompt("Enter eD2k link")
+            if (!link) return
+
+            let category: string | null =
+              data.categories.length === 1 ? data.categories[0]! : null
+            while (!category || !data.categories.includes(category)) {
+              category = prompt(
+                `Select a download category:\n${data.categories.map((c) => "  - " + c + "\n")}`
+              )
+              if (!category) return
+            }
+
+            fetcher.submit(
+              { category, urls: link },
+              { method: "POST", action: "/api/v2/ed2k/add" }
+            )
+
+            alert("Download started!")
+            navigate("/download-client")
+          }}
+        >
+          <span className="text-xl">
+            <AddIcon />
+          </span>
+          <span>Add eD2k link</span>
+        </button>
       </nav>
       <main className="relative mt-[60px] sm:ml-[250px]">{outlet}</main>
     </>
@@ -179,7 +212,7 @@ function StyledNavLink({ ...props }: Omit<NavLinkProps, "className">) {
   return (
     <NavLink
       className={twMerge(
-        "flex items-center gap-4 px-6 py-4 font-medium text-white hover:bg-neutral-700 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-[current=page]:bg-neutral-700"
+        "flex items-center gap-4 px-6 py-4 font-medium text-white aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-[current=page]:bg-neutral-700"
       )}
       {...props}
     />
