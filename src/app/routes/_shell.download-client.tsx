@@ -42,7 +42,7 @@ export default function Index() {
                 type="button"
                 className="-ml-2 -mt-2 shrink-0 px-2 pt-2 text-neutral-400"
                 onClick={() => {
-                  prompt(undefined, f.hash)
+                  prompt(undefined, f.link)
                 }}
               >
                 #

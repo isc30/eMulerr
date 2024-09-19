@@ -20,6 +20,30 @@
     font-display: fallback;
     src: local("Roboto"), url("/Roboto.ttf");
   }
+
+  /* disabled default state */
+  *:disabled,
+  [data-disabled="true"] {
+    @apply pointer-events-none opacity-50;
+  }
+
+  /* hover default state */
+  select:not(:disabled):hover,
+  select:not([aria-disabled="true"]):hover {
+    cursor: pointer;
+  }
+  button:not(:disabled):hover,
+  button:not([aria-disabled="true"]):hover,
+  a:not(:disabled):hover,
+  a:not([aria-disabled="true"]):hover,
+  input:not(:disabled):hover,
+  input:not([aria-disabled="true"]):hover,
+  select:not(:disabled):hover,
+  select:not([aria-disabled="true"]):hover,
+  textarea:not(:disabled):hover,
+  textarea:not([aria-disabled="true"]):hover {
+    background-image: linear-gradient(rgb(127 127 127 / 20%) 0 0);
+  }
 }
 
 @layer components {
@@ -41,10 +65,5 @@
   h2,
   .h2 {
     @apply text-xl font-medium underline underline-offset-8;
-  }
-
-  *:disabled,
-  [data-disabled="true"] {
-    @apply pointer-events-none opacity-50;
   }
 }

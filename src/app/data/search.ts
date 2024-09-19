@@ -1,5 +1,5 @@
 import { amuleDoSearch, amuleGetStats } from "amule/amule"
-import { toMagnetLink } from "~/links"
+import { toEd2kLink, toMagnetLink } from "~/links"
 import { toEntries, groupBy, skipFalsy } from "~/utils/array"
 import { logger } from "~/utils/logger"
 import { sanitizeFilename, setReleaseGroup } from "~/utils/naming"
@@ -56,6 +56,7 @@ function postProcessResult(
     return {
         ...r,
         name,
+        ed2kLink: toEd2kLink(r.hash, name, r.size),
         magnetLink: toMagnetLink(r.hash, name, r.size),
     }
 }
