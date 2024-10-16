@@ -5,11 +5,11 @@ ENV GUI_PWD=secret
 ENV WEBUI_PWD=secret
 ENV MOD_AUTO_RESTART_ENABLED=true
 ENV MOD_AUTO_RESTART_CRON="0 6 * * *"
-ENV MOD_AUTO_SHARE_ENABLED=false
-ENV MOD_AUTO_SHARE_DIRECTORIES=/tmp/shared;/downloads/complete
+ENV MOD_AUTO_SHARE_ENABLED=true
+ENV MOD_AUTO_SHARE_DIRECTORIES=/shared;/downloads/complete
 ENV MOD_FIX_KAD_GRAPH_ENABLED=true
 ENV MOD_FIX_KAD_BOOTSTRAP_ENABLED=true
-RUN mkdir -p /tmp/shared
+RUN mkdir -p /shared
 COPY ./src/amule/api.php /usr/share/amule/webserver/AmuleWebUI-Reloaded/api.php
 COPY ./src/amule/amule.conf /config-base/amule/amule.conf
 RUN mkdir -p /config/amule
