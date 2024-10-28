@@ -59,7 +59,7 @@ Also set the Download Client's `Remote Path Mappings`:
 
 - Host: `emulerr`
 - Remote Path: `/downloads`
-- Local Path: {The /downloads folder inside MOUNTED PATH FOR RADARR}
+- Local Path: `{The /downloads folder inside MOUNTED PATH FOR RADARR}`
 
 Then, add a new Indexer in *RR:
 
