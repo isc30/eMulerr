@@ -30,6 +30,7 @@ services:
     volumes:
       - ./config:/config # required
       - ./downloads:/downloads # required
+      - ./shared:/shared:ro # optional, extra files to be shared in ed2k/kad
 ```
 
 (Optional) Add eMulerr as a dependency for Radarr, Sonarr, etc:

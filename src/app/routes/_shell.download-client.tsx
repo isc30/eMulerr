@@ -95,6 +95,7 @@ export default function Index() {
                   {f.status_str === "downloading" && (
                     <>{readableEta(f.eta)} - </>
                   )}
+                  {f.status_str === "stopped" && <>Waiting - </>}
                   {f.status_str === "stalled" && <>Stalled - </>}
                   {f.status_str === "completing" && <>Verifying - </>}
                   {f.status_str === "downloaded" && <>Done - </>}

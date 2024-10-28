@@ -152,6 +152,11 @@
             amule_do_download_cmd($hash, 'cancel');
             echo '{}';
             break;
+        case "resume":
+            $hash = $HTTP_GET_VARS["hash"];
+            amule_do_download_cmd($hash, 'resume');
+            echo '{}';
+            break;
         case "reload-shared":
             amule_do_reload_shared_cmd();
             echo '{}';

@@ -6,11 +6,8 @@ import { exec } from "child_process"
 import { decode } from "html-entities"
 import { AmuleCategory } from "./amule.types"
 import { Mutex } from "async-mutex"
-import { toMagnetLink } from "~/links"
 import { staleWhileRevalidate } from "~/utils/memoize"
-import { groupBy, skipFalsy, toEntries } from "~/utils/array"
 import { logger } from "~/utils/logger"
-import { sanitizeFilename } from "~/utils/naming"
 import { z } from "zod"
 import { wait } from "~/utils/time"
 
@@ -115,6 +112,14 @@ export async function amuleDoDownload(link: string) {
 export async function amuleDoDelete(hash: string) {
   const url = new URL(`${host}/api.php`)
   url.searchParams.set("do", "cancel")
+  url.searchParams.set("hash", hash)
+
+  return await fetchAmuleApi(url)
+}
+
+export async function amuleDoResume(hash: string) {
+  const url = new URL(`${host}/api.php`)
+  url.searchParams.set("do", "resume")
   url.searchParams.set("hash", hash)
 
   return await fetchAmuleApi(url)

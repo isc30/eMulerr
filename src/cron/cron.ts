@@ -1,5 +1,6 @@
 import { logger } from "~/utils/logger"
 import { detectBrokenAmule } from "./detectBrokenAmule"
+import { resumePausedDownloads } from "./resumePausedDownloads"
 
 const jobs = [
   {
@@ -8,6 +9,12 @@ const jobs = [
     launchAtStart: false,
     launch: detectBrokenAmule,
   },
+  {
+    id: 2,
+    everySeconds: 60,
+    launchAtStart: true,
+    launch: resumePausedDownloads,
+  }
 ]
 
 // Using global as live reload will re-run the file, and variables get lost
