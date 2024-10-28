@@ -12,7 +12,7 @@ export function sanitizeFilename(str: string) {
   str = str.replace(/[/\\?%*:|"<>]/g, "")
 
   // replace unicode chars with their ascii equivalent
-  str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  str = str.normalize('NFKD').replace(/[\u0100-\uFFFF]/g, '')
 
   // fix utf8 decoding artifacts
   while (true) {

@@ -16,6 +16,10 @@ export async function resumePausedDownloads() {
     await globalThis.resumePausedDownloadsMutex.runExclusive(async () => {
         const downloads = await amuleGetDownloads()
         const stoppedDownloads = downloads.filter(d => d.status_str === 'stopped')
+        if (!stoppedDownloads.length) {
+            return
+        }
+
         logger.info('[resumePausedDownloads] Resuming', stoppedDownloads.length, 'downloads')
         await Promise.all(stoppedDownloads.map(d => amuleDoResume(d.hash)))
     })

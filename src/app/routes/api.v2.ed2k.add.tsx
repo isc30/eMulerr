@@ -2,6 +2,7 @@ import { ActionFunction, json } from "@remix-run/node"
 import { download } from "~/data/downloadClient"
 import { fromEd2kLink } from "~/links"
 import { logger } from "~/utils/logger"
+import { sanitizeFilename } from "~/utils/naming"
 
 export const action = (async ({ request }) => {
   logger.debug("URL", request.url)
@@ -18,7 +19,9 @@ export const action = (async ({ request }) => {
   }
 
   const { hash, name, size } = fromEd2kLink(urls)
-  await download(hash, name, size, category)
+  const sanitizedName = sanitizeFilename(name)
+  console.log(sanitizedName)
+  await download(hash, sanitizedName, size, category)
 
   return json({})
 }) satisfies ActionFunction
