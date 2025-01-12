@@ -2,8 +2,30 @@ import { amuleDoSearch, amuleGetStats } from "amule/amule"
 import { toEd2kLink, toMagnetLink } from "~/links"
 import { toEntries, groupBy, skipFalsy } from "~/utils/array"
 import { logger } from "~/utils/logger"
-import { sanitizeFilename, setReleaseGroup } from "~/utils/naming"
 import { searchKnown, trackKnown } from "./known"
+
+const specialCharactersMap: {[key: string]: string} = {
+    "Ä": ".", "Á": ".", "À": ".", "Â": ".", "Æ": ".", "Å": ".", "Ã": ".", "Ä": ".", "Å": ".", "Ă": ".", "Ą": ".", "Â": ".", "Ǎ": ".", "Ą": ".", 
+    "É": ".", "È": ".", "Ê": ".", "Ë": ".", "Ė": ".", "Ę": ".", "Ȩ": ".", "Ē": ".", "Ĕ": ".", "Ě": ".", 
+    "Í": ".", "Ì": ".", "Î": ".", "Ï": ".", "Ǐ": ".", "Ĩ": ".", "Į": ".", "Ì": ".", "Ī": ".", 
+    "Ó": ".", "Ò": ".", "Ô": ".", "Ö": ".", "Ő": ".", "Œ": ".", "Ø": ".", "Ǒ": ".", "Õ": ".", "Ȍ": ".", 
+    "Ú": ".", "Ù": ".", "Û": ".", "Ü": ".", "Ű": ".", "Ǔ": ".", "Ũ": ".", "Ų": ".", "Ū": ".", 
+    "Ý": ".", "Ŷ": ".", "Ÿ": ".", 
+    "ä": ".", "á": ".", "à": ".", "â": ".", "æ": ".", "å": ".", "ã": ".", "ä": ".", "å": ".", "ă": ".", "ą": ".", "â": ".", "ǎ": ".", "ą": ".", 
+    "é": ".", "è": ".", "ê": ".", "ë": ".", "ė": ".", "ę": ".", "ȩ": ".", "ē": ".", "ĕ": ".", "ě": ".", 
+    "í": ".", "ì": ".", "î": ".", "ï": ".", "ǐ": ".", "ĩ": ".", "į": ".", "ì": ".", "ī": ".", 
+    "ó": ".", "ò": ".", "ô": ".", "ö": ".", "ő": ".", "œ": ".", "ø": ".", "ǒ": ".", "õ": ".", "ȍ": ".", 
+    "ú": ".", "ù": ".", "û": ".", "ü": ".", "ű": ".", "ǔ": ".", "ũ": ".", "ų": ".", "ū": ".", 
+    "ý": ".", "ŷ": ".", "ÿ": ".", 
+    "Ç": ".", "Ñ": ".", "Þ": ".", "ß": ".", "Đ": ".", "Ď": ".", "Ň": ".", "Č": ".", "Ś": ".", "Š": ".", "Ž": ".", "Ť": ".", "Ð": ".", "Ł": ".", 
+    "Ń": ".", "Ǹ": ".", "Ň": ".", "Ŋ": ".", "Ø": ".", "Ś": ".", "Ŝ": ".", "Š": ".", "Ś": ".", "Ź": ".", "Ż": ".", "Ž": ".", 
+    "ç": ".", "ñ": ".", "þ": ".", "ß": ".", "đ": ".", "ď": ".", "ň": ".", "č": ".", "ś": ".", "š": ".", "ž": ".", "ť": ".", "ð": ".", "ł": ".", 
+    "ń": ".", "ǹ": ".", "ň": ".", "ŋ": ".", "ø": ".", "ś": ".", "ŝ": ".", "š": ".", "ś": ".", "ź": ".", "ż": ".", "ž": "."
+};
+
+export function sanitizeFilename(filename: string): string {
+    return filename.replace(/[^a-zA-Z0-9]/g, (char) => specialCharactersMap[char] || '.');
+}
 
 export async function searchAndWaitForResults(q: string | undefined, ext?: string) {
     if (!q) {
@@ -68,7 +90,6 @@ type Query = {
 
 type QueryNode = Query | string
 
-// I wrote this at 1am, contemplating why the fuck did I think of local searches :)
 function parseQuery(q: string): [QueryNode, string] {
     let modifier: "NOT" | null = null
     let current: Query = {
@@ -157,21 +178,6 @@ function parseQuery(q: string): [QueryNode, string] {
 
     return [current, ""]
 }
-
-// print('hola OR adios')
-// print('hola adios')
-// print('hola AND adios')
-// print('hola AND adios bye')
-// print('hola OR adios OR (juan AND NOT loco) wow OR NOT isc')
-// print('hola OR (juan loco)')
-// print('hola OR adios xd')
-// print('hola OR adios OR xd')
-// print('NOT loco')
-// print('hey hola OR adios OR (juan AND NOT loco www) wow OR NOT isc')
-
-// function print(q: string) {
-//   console.log(q, JSON.stringify(parseQuery(q)[0], undefined, 2))
-// }
 
 export function testQuery(query: string, target: string) {
     const [q] = parseQuery(query)
