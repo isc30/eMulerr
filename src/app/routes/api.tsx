@@ -119,7 +119,9 @@ async function tvSearch(url: URL) {
               `S${season}E${episode}`,
             ]
         : season
-          ? [`${season}x`, `S${season.padStart(2, "0")}`, `S${season}`]
+          ? season.length === 4 // daily episode
+            ? [season]
+            : [`${season}x`, `S${season.padStart(2, "0")}`, `S${season}`]
           : []
     ),
   ].filter(skipFalsy)
