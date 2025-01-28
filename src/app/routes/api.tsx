@@ -139,7 +139,7 @@ function sanitizeQuery(q: string | undefined | null) {
   // sonarr requests it like RembobIna, returning no results.
   // this function changes it to Rembob Ina
   return q
-    .replace(/[A-Z]/g, (match) => ` ${match}`)
+    .replace(/[A-Z]/g, (match) => `-${match}`)
     .replace(/ +/g, " ")
     .trim()
 }
