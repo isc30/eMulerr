@@ -110,12 +110,14 @@ async function tvSearch(url: URL) {
   const episodeQuery = [
     ...new Set(
       season && episode
-        ? [
-            `${season}x${episode}`,
-            `${season}x${episode.padStart(2, "0")}`,
-            `S${season.padStart(2, "0")}E${episode.padStart(2, "0")}`,
-            `S${season}E${episode}`,
-          ]
+        ? ["/", "-"].some((c) => episode.includes(c)) // daily episode
+          ? [`${season}/${episode}`]
+          : [
+              `${season}x${episode}`,
+              `${season}x${episode.padStart(2, "0")}`,
+              `S${season.padStart(2, "0")}E${episode.padStart(2, "0")}`,
+              `S${season}E${episode}`,
+            ]
         : season
           ? [`${season}x`, `S${season.padStart(2, "0")}`, `S${season}`]
           : []
