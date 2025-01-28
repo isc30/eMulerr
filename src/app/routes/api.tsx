@@ -138,5 +138,8 @@ function sanitizeQuery(q: string | undefined | null) {
   // in some situations like Rembob'Ina series,
   // sonarr requests it like RembobIna, returning no results.
   // this function changes it to Rembob Ina
-  return q.replace(/[A-Z]/g, (match) => ` ${match}`).replace(/ +/g, " ")
+  return q
+    .replace(/[A-Z]/g, (match) => ` ${match}`)
+    .replace(/ +/g, " ")
+    .trim()
 }
