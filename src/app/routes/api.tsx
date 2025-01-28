@@ -62,7 +62,7 @@ function caps(_url: URL) {
 }
 
 async function rawSearch(url: URL) {
-  let q = url.searchParams.get("q")
+  const q = sanitizeQuery(url.searchParams.get("q"))
   const offset = url.searchParams.get("offset")
   const cat =
     url.searchParams
@@ -86,7 +86,7 @@ async function rawSearch(url: URL) {
 }
 
 async function tvSearch(url: URL) {
-  const q = url.searchParams.get("q")?.toString()
+  const q = sanitizeQuery(url.searchParams.get("q")?.toString())
   const season = url.searchParams.get("season")?.toString()
   const episode = url.searchParams.get("ep")?.toString()
   const offset = url.searchParams.get("offset")?.toString()
@@ -128,4 +128,15 @@ async function tvSearch(url: URL) {
   const query = group([q, episodeFilter], "AND", false)
   const searchResults = await search(query)
   return itemsResponse(searchResults, cat)
+}
+
+function sanitizeQuery(q: string | undefined | null) {
+  if (!q) {
+    return q
+  }
+
+  // in some situations like Rembob'Ina series,
+  // sonarr requests it like RembobIna, returning no results.
+  // this function changes it to Rembob Ina
+  return q.replace(/[A-Z]/g, (match) => ` ${match}`).replace(/ +/g, " ")
 }
