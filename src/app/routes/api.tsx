@@ -45,9 +45,9 @@ function caps(_url: URL) {
   <retention days="1"/>
   <registration available="no" open="no" />
   <searching>
-    <search available="yes" supportedParams="q"/>
+    <search available="yes" supportedParams="q" searchEngine="raw"/>
     <movie-search available="no"/>
-    <tv-search available="yes" supportedParams="q,season,ep"/>
+    <tv-search available="yes" supportedParams="q,season,ep" searchEngine="raw"/>
   </searching>
   <categories>
     <category id="2000" name="Movies" />
@@ -57,7 +57,7 @@ function caps(_url: URL) {
   </categories>
   <tags>
     <tag name="freeleech" description="FreeLeech" />
-   </tags>
+  </tags>
 </caps>`
 }
 
@@ -137,11 +137,10 @@ function sanitizeQuery(q: string | undefined | null) {
     return q
   }
 
-  // in some situations like Rembob'Ina series,
-  // sonarr requests it like RembobIna, returning no results.
-  // this function changes it to Rembob Ina
   return q
-    .replace(/[A-Z]/g, (match) => ` ${match}`)
+    .normalize("NFKD")
+    .replace(/[\u0100-\uFFFF]/g, "")
+    .replace(/[^\w '-]/g, " ")
     .replace(/ +/g, " ")
     .trim()
 }
