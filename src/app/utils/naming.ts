@@ -9,7 +9,7 @@ export function setReleaseGroup(name: string) {
 
 export function sanitizeFilename(str: string) {
   // remove illegal characters
-  str = str.replace(/[^\w ]/g, "")
+  str = str.replace(/[/\\?%*:|"<>]/g, "_")
 
   // replace unicode chars with their ascii equivalent
   str = str.normalize('NFKD').replace(/[\u0100-\uFFFF]/g, '')
