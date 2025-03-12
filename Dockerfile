@@ -1,4 +1,4 @@
-FROM ngosang/amule:2.3.3-17 as amule
+FROM ngosang/amule:2.3.3-19 as amule
 ENV PUID=1000
 ENV PGID=1000
 ENV GUI_PWD=secret
@@ -15,7 +15,7 @@ COPY ./src/amule/amule.conf /config-base/amule/amule.conf
 RUN mkdir -p /config/amule
 RUN ln -s /config/amule /home/amule/.aMule
 
-FROM node as build
+FROM node:23-bookworm as build
 RUN apk upgrade
 RUN apk add nodejs
 RUN mkdir /app
