@@ -161,12 +161,15 @@ function DownloadResult({
             <option value="$$new$$">Create new category...</option>
           </select>
         ) : (
-          <div
+          <button
             className="text-right sm:w-40"
             title={`Grabbed as:${names.map((n) => `\n\t- ${n}`).join("")}`}
+            onClick={() =>
+              alert(`Grabbed as:${names.map((n) => `\n\t- ${n}`).join("")}`)
+            }
           >
-            Already in Downloads
-          </div>
+            Already in Downloads ℹ️
+          </button>
         )}
       </div>
     </fetcher.Form>

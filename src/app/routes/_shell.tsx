@@ -19,6 +19,7 @@ import { UpIcon } from "~/icons/upIcon"
 import { DownIcon } from "~/icons/downIcon"
 import { AddIcon } from "~/icons/addIcon"
 import { getCategories } from "~/data/categories"
+import { getDownloadClientFiles } from "~/data/downloadClient"
 
 export const action = (async ({ request }) => {
   void restartAmule().catch(() => {})
@@ -27,6 +28,7 @@ export const action = (async ({ request }) => {
 
 export const loader = (async () => {
   const stats = await amuleGetStats()
+  const downloads = await getDownloadClientFiles()
   const ed2kPort = process.env.ED2K_PORT
 
   return json({
@@ -34,6 +36,7 @@ export const loader = (async () => {
     speed_up: stats.speed_up ?? 0,
     speed_down: stats.speed_down ?? 0,
     ed2kPort,
+    downloads,
     time: new Date(),
     categories: await getCategories(),
   })
@@ -168,6 +171,7 @@ export default function Layout() {
             <DownloadIcon />
           </span>
           <span>Downloads</span>
+          <span className="grow text-right">({data.downloads.length})</span>
         </StyledNavLink>
         <StyledNavLink to="/search" onClick={() => setMenuHidden(true)}>
           <SearchIcon /> Search
