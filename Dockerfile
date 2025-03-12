@@ -16,6 +16,8 @@ RUN mkdir -p /config/amule
 RUN ln -s /config/amule /home/amule/.aMule
 
 FROM node as build
+RUN apk upgrade
+RUN apk add nodejs
 RUN mkdir /app
 WORKDIR /app
 ADD ./src/package.json ./src/package-lock.json ./
