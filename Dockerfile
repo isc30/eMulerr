@@ -10,6 +10,7 @@ ENV MOD_AUTO_SHARE_DIRECTORIES=/shared;/downloads/complete
 ENV MOD_FIX_KAD_GRAPH_ENABLED=true
 ENV MOD_FIX_KAD_BOOTSTRAP_ENABLED=true
 RUN mkdir -p /shared
+RUN mkdir -p /downloads/complete
 COPY ./src/amule/api.php /usr/share/amule/webserver/AmuleWebUI-Reloaded/api.php
 COPY ./src/amule/amule.conf /config-base/amule/amule.conf
 RUN mkdir -p /config/amule
