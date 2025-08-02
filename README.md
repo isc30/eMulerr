@@ -19,7 +19,7 @@ services:
       - PUID=1000
       - PGID=1000
       # - PORT=3000 # optional, default=3000
-      # - ED2K_PORT=4662 # optional, default=4662
+      # - ED2K_PORT=4662 # optional, required when exposing a non-standard port
       # - LOG_LEVEL=info # optional, default=info
       # - PASSWORD=1234 # optional, user=emulerr
     ports:
