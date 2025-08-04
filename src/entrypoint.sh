@@ -21,15 +21,17 @@ function run_emulerr() {
 }
 
 function set_amule_options() {
-    mkdir -p /config/amule
-    cp /config-base/amule/amule.conf /config/amule/amule.conf
-    sed -i "s/Port=4662/Port=$ED2K_PORT/g" /config/amule/amule.conf
-    sed -i "s/UDPPort=4672/UDPPort=$ED2K_PORT/g" /config/amule/amule.conf
-    echo $'/tmp/shared\n/downloads/complete'| cat>| /config/amule/shareddir.dat
-    rm -f /config/amule/muleLock
-    rm -f /config/amule/ipfilter* # remove when bug is fixed
-    chown -R "${PUID}:${PGID}" /config
-    chown -R "${PUID}:${PGID}" /downloads
+    if [ ! -f /config/amule/amule.conf ]; then
+        mkdir -p /config/amule
+        cp /config-base/amule/amule.conf /config/amule/amule.conf
+        sed -i "s/Port=4662/Port=$ED2K_PORT/g" /config/amule/amule.conf
+        sed -i "s/UDPPort=4672/UDPPort=$ED2K_PORT/g" /config/amule/amule.conf
+        echo $'/tmp/shared\n/downloads/complete'| cat>| /config/amule/shareddir.dat
+        rm -f /config/amule/muleLock
+        rm -f /config/amule/ipfilter* # remove when bug is fixed
+        chown -R "${PUID}:${PGID}" /config
+        chown -R "${PUID}:${PGID}" /downloads
+    fi
 }
 
 (run_amule) &
