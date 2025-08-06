@@ -29,7 +29,7 @@ services:
       # - "4665:4665/udp" # optional, ed2k global search udp (tcp port +3)
     volumes:
       - ./config:/config # required
-      - ./downloads:/downloads # required
+      - ./downloads:/downloads/complete # required
       # - ./shared:/shared:ro # optional, extra files to be shared via ed2k/kad
 ```
 
