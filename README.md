@@ -71,3 +71,33 @@ Then, add a new Indexer in *RR:
 - URL: `http://emulerr:3000/`
 - API Key (if using PASSWORD): `PASSWORD` (from environment variable)
 - Download Client: `emulerr`
+
+## aMule configuration overrides
+
+You can override (or add) any setting from the base `amule.conf` without editing the original file.  
+At container startup an override file is merged on top of the base configuration.
+
+Location inside the container:
+```
+/config/amule/amule.overrides.conf
+```
+
+If you mounted `./config:/config` (as shown above), the file on the host is:
+```
+./config/amule/amule.overrides.conf
+```
+
+Create (or edit) that file and place only the sections/keys you want to change.  
+Rules:
+- Sections follow standard INI format: `[SectionName]`
+- `key=value` lines override existing keys or get appended if they did not exist
+- Keys you omit keep their original value
+- Remove a line from overrides → original base value is used again on next container start
+
+Minimal example matching the shipped default with a changed nick:
+```ini
+[eMule]
+Nick=emulerr_ok
+[WebServer]
+UseGzip=1
+```
