@@ -26,6 +26,8 @@ RUN npm run build
 
 FROM amule
 USER root
+RUN apk update
+RUN apk upgrade
 RUN apk add --update nodejs npm
 ENV NODE_ENV=production
 ENV PORT=3000
