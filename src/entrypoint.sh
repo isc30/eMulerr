@@ -30,6 +30,7 @@ function set_amule_options() {
     rm -f /config/amule/ipfilter* # remove when bug is fixed
     chown -R "${PUID}:${PGID}" /config
     chown -R "${PUID}:${PGID}" /downloads
+    mkdir -p /downloads/complete
 }
 
 (run_amule) &
