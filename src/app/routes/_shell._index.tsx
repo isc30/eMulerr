@@ -2,7 +2,7 @@ import { json, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 export const loader = (async () => {
-  return json({ port: process.env.PORT, password: process.env.PASSWORD })
+  return json({ port: process.env.PORT, password: process.env.PASSWORD, ed2kPort: process.env.ED2K_PORT })
 }) satisfies LoaderFunction
 
 export default function Index() {
@@ -34,6 +34,11 @@ export default function Index() {
         <li>URL: http://THIS_CONTAINER_NAME:{data.port}/</li>
         {data.password !== "" && <li>API Key: {data.password}</li>}
         <li>Download Client: emulerr</li>
+      </ul>
+      <p className="my-2 mt-8">In your router, open the following ports:</p>
+      <ul className="list-disc pl-16 [&>*]:select-text">
+        <li>TCP/{data.ed2kPort}</li>
+        <li>UDP/{data.ed2kPort}</li>
       </ul>
     </main>
   )
