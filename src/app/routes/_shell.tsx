@@ -180,8 +180,15 @@ export default function Layout() {
         <button
           className="m-4 flex items-center justify-center gap-2 rounded-md border-2 border-neutral-600 bg-neutral-300 p-4 font-medium leading-none text-neutral-900 lg:gap-4"
           onClick={() => {
-            const link = prompt("Enter eD2k link")
-            if (!link) return
+            const urls = prompt(
+              "Enter eD2k links (multiple links separated by semicolon)"
+            )
+              ?.trim()
+              .split(";")
+              .map((u) => u.trim())
+              .filter((u) => !!u)
+
+            if (!urls?.length) return
 
             let category: string | null =
               data.categories.length === 1 ? data.categories[0]! : null
@@ -192,10 +199,14 @@ export default function Layout() {
               if (!category) return
             }
 
-            fetcher.submit(
-              { category, urls: link },
-              { method: "POST", action: "/api/v2/ed2k/add" }
-            )
+            const formData = new FormData()
+            formData.append("category", category)
+            urls.forEach((url) => formData.append("urls", url))
+
+            fetcher.submit(formData, {
+              method: "POST",
+              action: "/api/v2/ed2k/add",
+            })
 
             alert("Download started!")
             navigate("/download-client")
