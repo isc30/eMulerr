@@ -185,7 +185,7 @@ export default function Layout() {
 
             let category: string | null =
               data.categories.length === 1 ? data.categories[0]! : null
-            while (!category || !data.categories.includes(category)) {
+            while (!category) {
               category = prompt(
                 `Select a download category:\n${data.categories.map((c) => "  - " + c).join("\n")}`
               )
