@@ -21,7 +21,7 @@ export function CategoryPicker({
           if (ev.target.value === "$$new$$") {
             const cat = prompt("Enter the name of the new category")
             if (!cat) {
-              ev.target.value = "pick"
+              ev.target.value = currentCategory ?? "$$null$$"
               return
             }
             const option = new Option(cat, cat)

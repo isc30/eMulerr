@@ -72,23 +72,14 @@ export async function download(
 ) {
   const ed2kLink = toEd2kLink(hash, name, size)
   await amuleDoDownload(ed2kLink)
-
-  metadataDb.data[hash] = {
-    category,
-    addedOn: Date.now(),
-  }
+  setCategory(hash, category)
 }
 
 export function setCategory(hash: string, category: string) {
-  let entry = metadataDb.data[hash]
-  if (!entry) {
-    entry = metadataDb.data[hash] = {
-      addedOn: Date.now(),
-      category: category,
-    }
+  metadataDb.data[hash] = {
+    addedOn: Date.now(),
+    category: category,
   }
-
-  entry.category = category
 }
 
 export async function remove(hashes: string[]) {

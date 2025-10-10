@@ -17,7 +17,7 @@ export const action = (async ({ request }) => {
   if (category && hashes?.length) {
     await Promise.all(
       hashes.map(async (hash) => {
-        return setCategory(hash, category)
+        setCategory(hash, category)
       })
     )
   }
