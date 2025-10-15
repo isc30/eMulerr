@@ -23,12 +23,12 @@ function run_emulerr() {
 function set_amule_options() {
     mkdir -p /config/amule
     cp /config-base/amule/amule.conf /config/amule/amule.conf
-    touch /config/amule/amule.override.conf
+    touch /config/amule/amule.overrides.conf
     python3 - <<'EOF'
 import configparser
 
 config_path = "/config/amule/amule.conf"
-override_path = "/config/amule/amule.override.conf"
+overrides_path = "/config/amule/amule.overrides.conf"
 
 # Read with interpolation enabled
 config = configparser.ConfigParser()
@@ -38,7 +38,7 @@ config.read(config_path)
 # Read override without interpolation to avoid breaking existing references
 override = configparser.ConfigParser(interpolation=None)
 override.optionxform = str
-override.read(override_path) 
+override.read(overrides_path) 
 
 for section in override.sections():
     if not config.has_section(section):
