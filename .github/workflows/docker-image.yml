@@ -13,7 +13,11 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
+    
+    - name: Set datetime tag
+      id: datetime
+      run: echo "IMG_VER=$(date +'%Y-%m-%d')-${{ github.sha }}" >> $GITHUB_ENV
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       
@@ -27,6 +31,7 @@ jobs:
         images: isc30/emulerr
         tags: |
           type=raw,value=latest
+          type=raw,value=${{ env.IMG_VER }}
           
     - name: Build and push
       uses: docker/build-push-action@v6
@@ -35,3 +40,5 @@ jobs:
         push: true
         platforms: linux/amd64,linux/arm64
         tags: ${{ steps.meta.outputs.tags }}
+        build-args: |
+          IMG_VER=${{ env.IMG_VER }}

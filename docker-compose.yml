@@ -50,6 +50,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - IMG_VER=2025-01-01-ffac537e6cbbf934b08745a378932722df287a53
     image: isc30/emulerr:latest
     container_name: emulerr
     restart: unless-stopped

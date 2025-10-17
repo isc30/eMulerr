@@ -25,6 +25,8 @@ ADD ./src ./
 RUN npm run build
 
 FROM amule
+ARG IMG_VER
+ENV IMG_VER=${IMG_VER}
 USER root
 RUN apk update
 RUN apk upgrade

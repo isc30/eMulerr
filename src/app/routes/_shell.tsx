@@ -30,8 +30,10 @@ export const loader = (async () => {
   const stats = await amuleGetStats()
   const downloads = await getDownloadClientFiles()
   const ed2kPort = process.env.ED2K_PORT
+  const version = process.env.IMG_VER
 
   return json({
+    version,
     stats,
     speed_up: stats.speed_up ?? 0,
     speed_down: stats.speed_down ?? 0,
@@ -217,6 +219,9 @@ export default function Layout() {
           </span>
           <span>Add eD2k link</span>
         </button>
+        <span className="mb-4 text-center text-[8px] text-neutral-500">
+          {data.version}
+        </span>
       </nav>
       <main className="relative mt-[60px] sm:ml-[250px]">{outlet}</main>
     </>
