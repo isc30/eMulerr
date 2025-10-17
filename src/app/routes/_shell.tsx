@@ -58,7 +58,7 @@ export default function Layout() {
       <header className="fixed top-0 z-40 flex h-[60px] w-full shrink-0 items-center gap-3 whitespace-nowrap border-b border-neutral-700 bg-neutral-800 p-3 text-white">
         <NavLink to="/" className="hidden items-center sm:flex">
           <img alt="logo" src="/logo.png" className="h-7" />
-          <div className="ml-3 hidden sm:block">eMulerr v0.0.0</div>
+          <div className="ml-3 hidden sm:block">eMulerr</div>
         </NavLink>
         <button
           className="block p-2 text-xl sm:hidden"
