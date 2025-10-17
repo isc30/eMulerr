@@ -44,6 +44,7 @@ COPY --from=build /app/build ./build
 COPY --from=build /app/server.js ./server.js
 
 RUN apk add --no-cache bash
+RUN apk add --no-cache python3
 # RUN apk add --no-cache mediainfo
 # RUN apk add --no-cache ffmpeg
 
