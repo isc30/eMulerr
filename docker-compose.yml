@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   # poc:
   #   image: ${DOCKER_REGISTRY-}poc
@@ -51,7 +49,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - IMG_VER=2025-01-01-ffac537e6cbbf934b08745a378932722df287a53
+        - IMG_VER=2025-01-01-fffffff
     image: isc30/emulerr:latest
     container_name: emulerr
     restart: unless-stopped
@@ -75,7 +73,7 @@ services:
       
       # DEV MOUNTS, ignore
       - ./src:/emulerr-dev # DEV mount
-      - ./tmp:/emulerr-dev/node_modules # DEV mount
+      # - ./tmp:/emulerr-dev/node_modules # DEV mount
       - type: bind # DEV mount
         source: ./src/amule/api.php
         target: /usr/share/amule/webserver/AmuleWebUI-Reloaded/api.php

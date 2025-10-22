@@ -1,4 +1,4 @@
-FROM ngosang/amule:2.3.3-19 as amule
+FROM ngosang/amule:2.3.3-19 AS amule
 ENV PUID=1000
 ENV PGID=1000
 ENV GUI_PWD=secret
@@ -16,7 +16,7 @@ COPY ./src/amule/amule.conf /config-base/amule/amule.conf
 RUN mkdir -p /config/amule
 RUN ln -s /config/amule /home/amule/.aMule
 
-FROM node:23-bookworm as build
+FROM node:23-bookworm AS build
 RUN mkdir /app
 WORKDIR /app
 ADD ./src/package.json ./src/package-lock.json ./
