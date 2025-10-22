@@ -90,5 +90,5 @@ Nick=emulerr_test_override
 
 ## Removing stale downloads
 Since eMulerr simulates a qBittorrent api, it is fully compatible with:
-- Decluttarr
+- [Decluttarrr](https://github.com/ManiMatter/decluttarr)
 - [eMulerrStalledChecker](https://github.com/Jorman/Scripts/tree/master/eMulerrStalledChecker)
