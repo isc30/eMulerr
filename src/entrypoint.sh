@@ -30,13 +30,15 @@ import configparser
 config_path = "/config/amule/amule.conf"
 overrides_path = "/config/amule/amule.overrides.conf"
 
-# Read with interpolation enabled
-config = configparser.ConfigParser()
+class NoSpaceConfigParser(configparser.ConfigParser):
+    def write(self, fp, space_around_delimiters=False):
+        super().write(fp, space_around_delimiters=space_around_delimiters)
+
+config = NoSpaceConfigParser(interpolation=None)
 config.optionxform = str
 config.read(config_path) 
 
-# Read override without interpolation to avoid breaking existing references
-override = configparser.ConfigParser(interpolation=None)
+override = NoSpaceConfigParser(interpolation=None)
 override.optionxform = str
 override.read(overrides_path) 
 
@@ -47,7 +49,7 @@ for section in override.sections():
         config.set(section, key, value)
 
 with open(config_path, "w") as f:
-    config.write(f)
+    config.write(f, space_around_delimiters=False)
 EOF
     sed -i "s/Port=4662/Port=$ED2K_PORT/g" /config/amule/amule.conf
     sed -i "s/UDPPort=4672/UDPPort=$ED2K_PORT/g" /config/amule/amule.conf
