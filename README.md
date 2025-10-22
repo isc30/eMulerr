@@ -87,3 +87,8 @@ Minimal example matching the shipped default with a changed nick:
 [eMule]
 Nick=emulerr_test_override
 ```
+
+## Removing stale downloads
+Since eMulerr simulates a qBittorrent api, it is fully compatible with:
+- Decluttarr
+- [eMulerrStalledChecker](https://github.com/Jorman/Scripts/tree/master/eMulerrStalledChecker)
