@@ -49,7 +49,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - IMG_VER=2025-01-01-fffffff
+        - IMG_VER=2025-01-01_fafafaf
     image: isc30/emulerr:latest
     container_name: emulerr
     restart: unless-stopped

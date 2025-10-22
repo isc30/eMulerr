@@ -18,7 +18,7 @@ jobs:
 
       - name: Set datetime tag
         id: datetime
-        run: echo "IMG_VER=$(date +'%Y-%m-%d')-${{ env.SHA }}" >> $GITHUB_ENV
+        run: echo "IMG_VER=$(date +'%Y-%m-%d')_${{ env.SHA }}" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
