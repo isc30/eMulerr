@@ -8,14 +8,22 @@ function run_amule() {
 }
 
 function run_emulerr() {
+    # wait until amule user is ready
+    while ! id amule &>/dev/null; do
+        sleep 0.5
+    done
+
     if [ -d /emulerr-dev ]; then
         cd /emulerr-dev
-        npm install --production=false
+        npm ci --production=false
         env NODE_ENV=development npm run dev
     else
+        chown -R "amule:amule" /emulerr
         cd /emulerr
         while true; do
-            env NODE_ENV=production npm run start
+            su amule -s /bin/sh <<'EOF'
+env NODE_ENV=production npm run start
+EOF
         done
     fi
 }

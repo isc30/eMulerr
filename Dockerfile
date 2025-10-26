@@ -20,7 +20,7 @@ FROM node:23-bookworm AS build
 RUN mkdir /app
 WORKDIR /app
 ADD ./src/package.json ./src/package-lock.json ./
-RUN npm install --production=false
+RUN npm ci --production=false
 ADD ./src ./
 RUN npm run build
 
@@ -31,6 +31,8 @@ USER root
 RUN apk update
 RUN apk upgrade
 RUN apk add --update nodejs npm
+RUN apk add --no-cache bash
+RUN apk add --no-cache python3
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV ED2K_PORT=4662
@@ -39,15 +41,9 @@ ENV PASSWORD=
 RUN mkdir -p /emulerr
 WORKDIR /emulerr
 ADD ./src/package.json ./src/package-lock.json ./
-RUN npm install --production=true
+RUN npm ci --production=true
 COPY --from=build /app/build ./build
 COPY --from=build /app/server.js ./server.js
-
-RUN apk add --no-cache bash
-RUN apk add --no-cache python3
-# RUN apk add --no-cache mediainfo
-# RUN apk add --no-cache ffmpeg
-
 COPY ./src/entrypoint.sh /home/entrypoint.sh
 ENTRYPOINT ["/bin/bash", "/home/entrypoint.sh"]
 COPY ./src/healthcheck.sh /home/healthcheck.sh
