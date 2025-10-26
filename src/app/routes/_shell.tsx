@@ -219,7 +219,7 @@ export default function Layout() {
           </span>
           <span>Add eD2k link</span>
         </button>
-        <span className="mb-4 select-text text-center text-xs text-neutral-500">
+        <span className="mb-4 select-text text-center text-sm text-neutral-500">
           {data.version}
         </span>
       </nav>
