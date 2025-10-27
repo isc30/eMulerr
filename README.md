@@ -16,8 +16,8 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      - PUID=1000
-      - PGID=1000
+      # - PUID=1000 # optional
+      # - PGID=1000 # optional
       # - PORT=3000 # optional, web-ui port
       # - ED2K_PORT=4662 # optional, only required when exposing a non-standard port
       # - LOG_LEVEL=info # optional
