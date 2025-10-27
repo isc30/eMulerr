@@ -16,8 +16,8 @@ jobs:
 
       - uses: benjlevesque/short-sha@v3.0
 
-      - name: Set datetime tag
-        id: datetime
+      - name: Set imgver tag
+        id: imgver
         run: echo "IMG_VER=$(date +'%Y-%m-%d')_${{ env.SHA }}" >> $GITHUB_ENV
 
       - name: Set up QEMU
