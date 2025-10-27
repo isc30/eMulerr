@@ -64,6 +64,7 @@ EOF
     echo $'/tmp/shared\n/downloads/complete'| cat>| /config/amule/shareddir.dat
     rm -f /config/amule/muleLock
     rm -f /config/amule/ipfilter* # remove when bug is fixed
+    chown -R "${PUID}:${PGID}" /home/amule/.aMule
     chown -R "${PUID}:${PGID}" /config
     chown -R "${PUID}:${PGID}" /downloads
     mkdir -p /downloads/complete
