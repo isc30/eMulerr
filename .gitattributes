@@ -1,1 +1,5 @@
 * text eol=lf
+
+# Binary files - override text conversion (last match wins)
+*.png binary
+*.ico binary
