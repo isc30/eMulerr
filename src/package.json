@@ -19,7 +19,7 @@
     "@remix-validated-form/with-zod": "^2.0.7",
     "async-mutex": "^0.5.0",
     "chalk": "^5.3.0",
-    "compression": "^1.7.4",
+    "compression": "^1.8.1",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "deep-copy-ts": "^0.5.4",
