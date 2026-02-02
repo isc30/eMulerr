@@ -2,7 +2,7 @@ import { amuleDoSearch, amuleGetStats } from "amule/amule"
 import { toEd2kLink, toMagnetLink } from "~/links"
 import { toEntries, groupBy, skipFalsy } from "~/utils/array"
 import { logger } from "~/utils/logger"
-import { sanitizeFilename, setReleaseGroup } from "~/utils/naming"
+import { setReleaseGroup } from "~/utils/naming"
 import { searchKnown, trackKnown } from "./known"
 
 
