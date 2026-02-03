@@ -16,13 +16,15 @@ export function sanitizeUnicode(str: string) {
     .replace(/[\u0100-\uFFFF]/g, "")
 }
 
+export function sanitizeQuery(q: string): string
+export function sanitizeQuery(q: string | undefined | null): string
 export function sanitizeQuery(q: string | undefined | null) {
   if (!q) {
     return q
   }
 
   return sanitizeUnicode(q)
-    .replace(/[^\w '-]/g, " ")
+    .replace(/[^\w \(\)'-]/g, " ")
     .replace(/ +/g, " ")
     .trim()
 }

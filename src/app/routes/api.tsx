@@ -8,7 +8,6 @@ import {
   itemsResponse,
   search,
 } from "~/utils/indexers"
-import { sanitizeQuery } from "~/utils/naming"
 
 export const loader = (async ({ request }) => {
   const content = await handleTorznabRequest(request)
@@ -63,7 +62,7 @@ function caps(_url: URL) {
 }
 
 async function rawSearch(url: URL) {
-  const q = sanitizeQuery(url.searchParams.get("q"))
+  const q = url.searchParams.get("q")
   const offset = url.searchParams.get("offset")
   const cat =
     url.searchParams
@@ -87,7 +86,7 @@ async function rawSearch(url: URL) {
 }
 
 async function tvSearch(url: URL) {
-  const q = sanitizeQuery(url.searchParams.get("q")?.toString())
+  const q = url.searchParams.get("q")
   const season = url.searchParams.get("season")?.toString()
   const episode = url.searchParams.get("ep")?.toString()
   const offset = url.searchParams.get("offset")?.toString()
