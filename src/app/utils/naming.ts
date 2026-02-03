@@ -7,12 +7,30 @@ export function setReleaseGroup(name: string) {
   return name
 }
 
+export function sanitizeUnicode(str: string) {
+  const apostrophes = /[\u2018\u2019\u02BB\u02BC\u201B\u2032]/g
+
+  return str
+    .normalize("NFKD")
+    .replace(apostrophes, "'")
+    .replace(/[\u0100-\uFFFF]/g, "")
+}
+
+export function sanitizeQuery(q: string | undefined | null) {
+  if (!q) {
+    return q
+  }
+
+  return sanitizeUnicode(q)
+    .replace(/[^\w '-]/g, " ")
+    .replace(/ +/g, " ")
+    .trim()
+}
+
 export function sanitizeFilename(str: string) {
   // remove illegal characters
   str = str.replace(/[/\\?%*:|"<>]/g, "_")
-
-  // replace unicode chars with their ascii equivalent
-  str = str.normalize('NFKD').replace(/[\u0100-\uFFFF]/g, '')
+  str = sanitizeUnicode(str)
 
   // fix utf8 decoding artifacts
   while (true) {

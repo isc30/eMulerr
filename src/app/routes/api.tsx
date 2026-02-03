@@ -8,6 +8,7 @@ import {
   itemsResponse,
   search,
 } from "~/utils/indexers"
+import { sanitizeQuery } from "~/utils/naming"
 
 export const loader = (async ({ request }) => {
   const content = await handleTorznabRequest(request)
@@ -132,15 +133,3 @@ async function tvSearch(url: URL) {
   return itemsResponse(searchResults, cat)
 }
 
-function sanitizeQuery(q: string | undefined | null) {
-  if (!q) {
-    return q
-  }
-
-  return q
-    .normalize("NFKD")
-    .replace(/[\u0100-\uFFFF]/g, "")
-    .replace(/[^\w '-]/g, " ")
-    .replace(/ +/g, " ")
-    .trim()
-}
