@@ -12,7 +12,7 @@ export function sanitizeUnicode(str: string) {
 
   return str
     .normalize("NFKD")
-    .replace(apostrophes, "'")
+    .replace(apostrophes, " ")
     .replace(/[\u0100-\uFFFF]/g, "")
 }
 
