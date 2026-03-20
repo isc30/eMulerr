@@ -7,21 +7,43 @@ function run_amule() {
     done
 }
 
+function choose_emulerr_user() {
+    # 1. prefer the user "amule" if it exists
+    if id amule &>/dev/null; then
+        echo "amule"
+        return 0
+    fi
+
+    # 2. otherwise try using the user with UID=$PUID
+    if [ -n "$PUID" ] && getent passwd "$PUID" >/dev/null 2>&1; then
+        getent passwd "$PUID" | cut -d: -f1
+        return 0
+    fi
+
+    # 3. otherwise try "nobody"
+    if id nobody &>/dev/null; then
+        echo "nobody"
+        return 0
+    fi
+
+    # 4. last resort: root
+    echo "root"
+    return 0
+}
+
 function run_emulerr() {
-    # wait until amule user is ready
-    while ! id amule &>/dev/null; do
-        sleep 0.5
-    done
+    local EMULERR_USER
+    EMULERR_USER=$(choose_emulerr_user)
 
     if [ -d /emulerr-dev ]; then
         cd /emulerr-dev
         npm ci --production=false
         env NODE_ENV=development npm run dev
     else
-        chown -R "amule:amule" /emulerr
+        chown -R "$EMULERR_USER":"${PGID:-$EMULERR_USER}" /emulerr 2>/dev/null || true
         cd /emulerr
         while true; do
-            su amule -s /bin/sh <<'EOF'
+            su "$EMULERR_USER" -s /bin/sh <<'EOF'
 env NODE_ENV=production npm run start
 EOF
         done
@@ -61,7 +83,7 @@ with open(config_path, "w") as f:
 EOF
     sed -i "s/Port=4662/Port=$ED2K_PORT/g" /config/amule/amule.conf
     sed -i "s/UDPPort=4672/UDPPort=$ED2K_PORT/g" /config/amule/amule.conf
-    echo $'/tmp/shared\n/downloads/complete'| cat>| /config/amule/shareddir.dat
+    echo $'/tmp/shared\n/downloads/complete' > /config/amule/shareddir.dat
     rm -f /config/amule/muleLock
     rm -f /config/amule/ipfilter* # remove when bug is fixed
     chown -R "${PUID}:${PGID}" /home/amule/.aMule
