@@ -53,7 +53,7 @@ EOF
 function set_amule_options() {
     mkdir -p /config/amule
     cp /config-base/amule/amule.conf /config/amule/amule.conf
-    touch /config/amule/amule.overrides.conf || true
+    touch /config/amule/amule.overrides.conf
     python3 - <<'EOF'
 import configparser
 
@@ -86,9 +86,9 @@ EOF
     echo $'/tmp/shared\n/downloads/complete' > /config/amule/shareddir.dat
     rm -f /config/amule/muleLock
     rm -f /config/amule/ipfilter* # remove when bug is fixed
-    chown -R "${PUID}:${PGID}" /home/amule/.aMule 2>/dev/null || true
-    chown -R "${PUID}:${PGID}" /config 2>/dev/null || true
-    chown -R "${PUID}:${PGID}" /downloads 2>/dev/null || true
+    chown -R "${PUID}:${PGID}" /home/amule/.aMule
+    chown -R "${PUID}:${PGID}" /config
+    chown -R "${PUID}:${PGID}" /downloads
     mkdir -p /downloads/complete
 }
 
