@@ -1,0 +1,85 @@
+name: Bug Report
+description: Report something that is not working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Please include as much detail as possible to help us reproduce and fix the issue quickly.
+
+  - type: input
+    id: version
+    attributes:
+      label: eMulerr version / image tag
+      description: "Docker image tag or commit SHA (e.g. `isc30/emulerr:latest` or `isc30/emulerr:2025-06-01`)"
+      placeholder: "isc30/emulerr:latest"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Host OS and Docker version
+      description: "e.g. Ubuntu 22.04, Docker 27.0"
+      placeholder: "Ubuntu 22.04, Docker 27.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: docker-compose / environment configuration
+      description: "Paste your docker-compose snippet. Remove passwords and API keys."
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: "What did you do? Be as specific as possible."
+      placeholder: |
+        1. Start the container with ...
+        2. Open Sonarr and trigger a search for ...
+        3. See error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: "What should have happened?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: "What actually happened? Include any error messages."
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Set `LOG_LEVEL=debug`, restart the container, reproduce the issue, then paste relevant logs.
+        ```bash
+        docker logs emulerr 2>&1
+        ```
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: "Screenshots, curl output, network diagrams, or anything else that might help."
+    validations:
+      required: false

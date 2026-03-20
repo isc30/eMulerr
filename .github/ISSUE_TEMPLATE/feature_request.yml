@@ -1,0 +1,42 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Please describe the **use case** — not just the solution —
+        so we can understand the problem you're trying to solve.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: "What problem are you trying to solve? What is currently missing or painful?"
+      placeholder: "When I try to do X, I have to Y which is frustrating because Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: "Describe your ideal solution. How would it work from a user perspective?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: "Have you tried any workarounds or alternative approaches?"
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: "Links, screenshots, references to similar features in other tools, etc."
+    validations:
+      required: false
