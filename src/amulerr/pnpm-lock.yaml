@@ -32,9 +32,6 @@ importers:
       async-mutex:
         specifier: ^0.5.0
         version: 0.5.0
-      hi-base32:
-        specifier: ^0.5.1
-        version: 0.5.1
       html-entities:
         specifier: ^2.6.0
         version: 2.6.0
@@ -1816,9 +1813,6 @@ packages:
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
-
-  hi-base32@0.5.1:
-    resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
 
   hookable@6.1.1:
     resolution: {integrity: sha512-U9LYDy1CwhMCnprUfeAZWZGByVbhd54hwepegYTK7Pi5NvqEj63ifz5z+xukznehT7i6NIZRu89Ay1AZmRsLEQ==}
@@ -4255,8 +4249,6 @@ snapshots:
       crossws: 0.4.6(srvx@0.11.16)
 
   has-flag@4.0.0: {}
-
-  hi-base32@0.5.1: {}
 
   hookable@6.1.1: {}
 

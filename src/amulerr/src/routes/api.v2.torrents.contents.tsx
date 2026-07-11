@@ -4,10 +4,14 @@ import {
 } from '#/lib/torrent-files'
 import { createFileRoute } from '@tanstack/react-router'
 
-// https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents
-export const Route = createFileRoute('/api/v2/torrents/files')({
+// PyMedusa posts here (legacy qBittorrent name); same payload as GET /torrents/files.
+export const Route = createFileRoute('/api/v2/torrents/contents')({
   server: {
     handlers: {
+      POST: async ({ request }) => {
+        const rawHash = await extractTorrentHash(request)
+        return getTorrentFilesResponse(rawHash)
+      },
       GET: async ({ request }) => {
         const rawHash = await extractTorrentHash(request)
         return getTorrentFilesResponse(rawHash)

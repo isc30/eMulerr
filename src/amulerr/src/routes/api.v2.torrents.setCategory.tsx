@@ -1,6 +1,5 @@
-
 import { useAmule } from '#/amule'
-import { skipFalsy } from '#/lib/array'
+import { hasTorrentHashInput, resolveTorrentHashes } from '#/lib/torrents'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/api/v2/torrents/setCategory')({
@@ -8,24 +7,26 @@ export const Route = createFileRoute('/api/v2/torrents/setCategory')({
     handlers: {
       POST: async ({ request }) => {
         const formData = await request.formData()
-        const hashes = formData
-          .get("hashes")
-          ?.toString()
-          ?.toUpperCase()
-          ?.split("|")
-          .filter(skipFalsy)
-        const categoryTitle = formData.get("category")?.toString()
+        const rawHashes = formData.get('hashes')?.toString()
+        const categoryTitle = formData.get('category')?.toString()
 
-        if (categoryTitle && hashes?.length) {
+        if (categoryTitle && hasTorrentHashInput(rawHashes)) {
           await useAmule(async (amule) => {
+            const hashes = await resolveTorrentHashes(amule, rawHashes)
+            if (!hashes.length) {
+              return
+            }
+
             const categories = await amule.getCategories()
-            const categoryId = categories.find(c => c.title === categoryTitle)?.id
+            const categoryId = categories.find(
+              (c) => c.title === categoryTitle,
+            )?.id
             if (!categoryId) {
               throw new Error(`Category ${categoryTitle} not found`)
             }
 
             for (const hash of hashes) {
-              if (!await amule.setFileCategory(hash, categoryId)) {
+              if (!(await amule.setFileCategory(hash, categoryId))) {
                 throw new Error(`Failed to set category for torrent ${hash}`)
               }
             }
@@ -33,7 +34,7 @@ export const Route = createFileRoute('/api/v2/torrents/setCategory')({
         }
 
         return Response.json({})
-      }
-    }
+      },
+    },
   },
 })

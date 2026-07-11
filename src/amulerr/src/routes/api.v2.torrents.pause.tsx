@@ -1,6 +1,5 @@
-
 import { useAmule } from '#/amule'
-import { skipFalsy } from '#/lib/array'
+import { hasTorrentHashInput, resolveTorrentHashes } from '#/lib/torrents'
 import { createFileRoute } from '@tanstack/react-router'
 
 // https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#pause-torrents
@@ -9,23 +8,19 @@ export const Route = createFileRoute('/api/v2/torrents/pause')({
     handlers: {
       POST: async ({ request }) => {
         const formData = await request.formData()
-        const hashes = formData
-          .get("hashes")
-          ?.toString()
-          ?.toUpperCase()
-          ?.split("|")
-          .filter(skipFalsy)
+        const rawHashes = formData.get('hashes')?.toString()
 
-        if (hashes?.length) {
+        if (hasTorrentHashInput(rawHashes)) {
           await useAmule(async (amule) => {
+            const hashes = await resolveTorrentHashes(amule, rawHashes)
             for (const hash of hashes) {
               await amule.pauseDownload(hash)
             }
           })
         }
 
-        return new Response("Ok", { status: 200 })
-      }
-    }
+        return new Response('Ok', { status: 200 })
+      },
+    },
   },
 })
