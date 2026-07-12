@@ -1,12 +1,21 @@
 import base32 from "hi-base32"
 
-export function toMagnetLink(hash: string, name: string, size: number) {
-  const hashBuffer = Buffer.from(hash, "hex")
-  const base32Buffer = Buffer.alloc(20, "\0")
-  hashBuffer.copy(base32Buffer)
-  const base32Hash = base32.encode(base32Buffer).toUpperCase()
+function normalizeEd2kHashForMagnet(value: string): string | null {
+  const trimmed = value.trim()
+  if (trimmed.length !== 32 || !/^[0-9a-fA-F]{32}$/.test(trimmed)) {
+    return null
+  }
+  return trimmed.toUpperCase()
+}
 
-  return `magnet:?xt=urn:btih:${base32Hash}&dn=${encodeURIComponent(name)}&xl=${size}&tr=http://amulerr`
+export function toMagnetLink(hash: string, name: string, size: number) {
+  const normalized = normalizeEd2kHashForMagnet(hash)
+  if (!normalized) {
+    throw new Error("Invalid ed2k hash")
+  }
+
+  const btih = `${normalized.toLowerCase()}00000000`
+  return `magnet:?xt=urn:btih:${btih}&dn=${encodeURIComponent(name)}&xl=${size}&tr=http://amulerr`
 }
 
 export function fromMagnetLink(magnetLink: string) {
