@@ -1,21 +1,24 @@
 import base32 from "hi-base32"
 
-function normalizeEd2kHashForMagnet(value: string): string | null {
-  const trimmed = value.trim()
-  if (trimmed.length !== 32 || !/^[0-9a-fA-F]{32}$/.test(trimmed)) {
+function parseEd2kHash(value: string) {
+  const normalized = value.trim().toUpperCase()
+  if (!/^[0-9A-F]{32}$/.test(normalized)) {
     return null
   }
-  return trimmed.toUpperCase()
+  
+  return normalized
 }
 
 export function toMagnetLink(hash: string, name: string, size: number) {
-  const normalized = normalizeEd2kHashForMagnet(hash)
-  if (!normalized) {
-    throw new Error("Invalid ed2k hash")
-  }
+  const ed2kHash = parseEd2kHash(hash)
+  if (!ed2kHash) { return null }
 
-  const btih = `${normalized.toLowerCase()}00000000`
-  return `magnet:?xt=urn:btih:${btih}&dn=${encodeURIComponent(name)}&xl=${size}&tr=http://amulerr`
+  const hashBuffer = Buffer.from(ed2kHash, "hex")
+  const base32Buffer = Buffer.alloc(20, "\0")
+  hashBuffer.copy(base32Buffer)
+  const base32Hash = base32.encode(base32Buffer).toUpperCase()
+
+  return `magnet:?xt=urn:btih:${base32Hash}&dn=${encodeURIComponent(name)}&xl=${size}&tr=http://amulerr`
 }
 
 export function fromMagnetLink(magnetLink: string) {
@@ -44,7 +47,7 @@ export function toEd2kLink(hash: string, name: string, size: number) {
 
 export function fromEd2kLink(ed2kLink: string) {
   const extractEd2kLinkInfo =
-    /ed2k:\/\/\|file\|(?<name>[^\|]+)\|(?<size>[^\|]+)\|(?<hash>[^\|]+)\|/
+    /ed2k:\/\/\|file\|(?<name>[^|]+)\|(?<size>[^|]+)\|(?<hash>[^|]+)\|/
 
   const { hash, name, size } = extractEd2kLinkInfo.exec(ed2kLink)?.groups ?? {}
 
@@ -52,5 +55,10 @@ export function fromEd2kLink(ed2kLink: string) {
     throw new Error("Invalid ed2k link")
   }
 
-  return { hash, name: decodeURIComponent(name), size: parseInt(size) }
+  const ed2kHash = parseEd2kHash(hash)
+  if (ed2kHash == null) {
+    throw new Error("Invalid ed2k hash")
+  }
+
+  return { hash: ed2kHash, name: decodeURIComponent(name), size: parseInt(size) }
 }

@@ -20,46 +20,45 @@ export const emptyResponse = (offset: string) => `
 
 export const itemsResponse = (
   searchResults: Awaited<ReturnType<typeof searchAll>>,
-  categories: number[]
-) => {
-  const items = searchResults.flatMap((item) => {
-    let magnet: string
-    try {
-      magnet = toMagnetLink(item.fileHash, item.fileName, item.fileSize)
-    } catch {
-      return []
-    }
+  categories: number[],
+) => `
+  <rss version="2.0" xmlns:torznab="http://torznab.com/schemas/2015/feed">
+    <channel>
+      <torznab:response offset="0" total="${searchResults.length}"/>
+      ${searchResults
+        .map((item) => {
+          const magnetLink = toMagnetLink(
+            item.fileHash,
+            item.fileName,
+            item.fileSize,
+          )
 
-    return [
-      `
+          if (!magnetLink) {
+            return null
+          }
+
+          return `
           <item>
             <title>${encode(item.fileName)}</title>
             <guid>${item.fileHash}-${encode(item.fileName)}</guid>
-            <link>${encode(magnet)}</link>
             <pubDate>${buildRFC822Date(new Date())}</pubDate>
-            <enclosure url="${encode(magnet)}" length="${item.fileSize}" type="application/x-bittorrent" />
+            <enclosure url="${encode(magnetLink)}" length="${item.fileSize}" type="application/x-bittorrent" />
             <torznab:attr name="size" value="${item.fileSize}" />
-            <torznab:attr name="magneturl" value="${encode(magnet)}" />
-            ${categories.map((c) => `<torznab:attr name="category" value="${c}" />`).join("")}
+            <torznab:attr name="magneturl" value="${encode(magnetLink)}" />
+            ${categories.map((c) => `<torznab:attr name="category" value="${c}" />`).join('')}
             <torznab:attr name="seeders" value="${item.sourceCount}" />
             <torznab:attr name="downloadvolumefactor" value="0" />
             <torznab:attr name="uploadvolumefactor" value="0" />
             <torznab:attr name="minimumratio" value="0" />
             <torznab:attr name="minimumseedtime" value="0" />
             <torznab:attr name="tag" value="freeleech" />
-          </item>`,
-    ]
-  })
-
-  return `
-  <rss version="2.0" xmlns:torznab="http://torznab.com/schemas/2015/feed">
-    <channel>
-      <torznab:response offset="0" total="${items.length}"/>
-      ${items.join("")}
+          </item>`
+        })
+        .filter(skipFalsy)
+        .join('')}
     </channel>
   </rss>
   `
-}
 
 export function group<T>(
   arr: T[],
