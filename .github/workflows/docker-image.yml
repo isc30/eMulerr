@@ -8,8 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # required for creating GitHub releases
-      packages: write   # required for pushing to GHCR
+      contents: write # required for creating GitHub releases
+      packages: write # required for pushing to GHCR
     steps:
       - uses: actions/checkout@v3
 
@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
