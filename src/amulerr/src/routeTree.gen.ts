@@ -25,7 +25,10 @@ import { Route as ApiV2TorrentsCreateCategoryRouteImport } from './routes/api.v2
 import { Route as ApiV2TorrentsCategoriesRouteImport } from './routes/api.v2.torrents.categories'
 import { Route as ApiV2TorrentsAddRouteImport } from './routes/api.v2.torrents.add'
 import { Route as ApiV2SyncMaindataRouteImport } from './routes/api.v2.sync.maindata'
+import { Route as ApiV2AuthLogoutRouteImport } from './routes/api.v2.auth.logout'
+import { Route as ApiV2AuthLoginRouteImport } from './routes/api.v2.auth.login'
 import { Route as ApiV2AppWebapiVersionRouteImport } from './routes/api.v2.app.webapiVersion'
+import { Route as ApiV2AppVersionRouteImport } from './routes/api.v2.app.version'
 import { Route as ApiV2AppPreferencesRouteImport } from './routes/api.v2.app.preferences'
 
 const HealthRoute = HealthRouteImport.update({
@@ -111,9 +114,24 @@ const ApiV2SyncMaindataRoute = ApiV2SyncMaindataRouteImport.update({
   path: '/v2/sync/maindata',
   getParentRoute: () => ApiRoute,
 } as any)
+const ApiV2AuthLogoutRoute = ApiV2AuthLogoutRouteImport.update({
+  id: '/v2/auth/logout',
+  path: '/v2/auth/logout',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiV2AuthLoginRoute = ApiV2AuthLoginRouteImport.update({
+  id: '/v2/auth/login',
+  path: '/v2/auth/login',
+  getParentRoute: () => ApiRoute,
+} as any)
 const ApiV2AppWebapiVersionRoute = ApiV2AppWebapiVersionRouteImport.update({
   id: '/v2/app/webapiVersion',
   path: '/v2/app/webapiVersion',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiV2AppVersionRoute = ApiV2AppVersionRouteImport.update({
+  id: '/v2/app/version',
+  path: '/v2/app/version',
   getParentRoute: () => ApiRoute,
 } as any)
 const ApiV2AppPreferencesRoute = ApiV2AppPreferencesRouteImport.update({
@@ -127,7 +145,10 @@ export interface FileRoutesByFullPath {
   '/api': typeof ApiRouteWithChildren
   '/health': typeof HealthRoute
   '/api/v2/app/preferences': typeof ApiV2AppPreferencesRoute
+  '/api/v2/app/version': typeof ApiV2AppVersionRoute
   '/api/v2/app/webapiVersion': typeof ApiV2AppWebapiVersionRoute
+  '/api/v2/auth/login': typeof ApiV2AuthLoginRoute
+  '/api/v2/auth/logout': typeof ApiV2AuthLogoutRoute
   '/api/v2/sync/maindata': typeof ApiV2SyncMaindataRoute
   '/api/v2/torrents/add': typeof ApiV2TorrentsAddRoute
   '/api/v2/torrents/categories': typeof ApiV2TorrentsCategoriesRoute
@@ -147,7 +168,10 @@ export interface FileRoutesByTo {
   '/api': typeof ApiRouteWithChildren
   '/health': typeof HealthRoute
   '/api/v2/app/preferences': typeof ApiV2AppPreferencesRoute
+  '/api/v2/app/version': typeof ApiV2AppVersionRoute
   '/api/v2/app/webapiVersion': typeof ApiV2AppWebapiVersionRoute
+  '/api/v2/auth/login': typeof ApiV2AuthLoginRoute
+  '/api/v2/auth/logout': typeof ApiV2AuthLogoutRoute
   '/api/v2/sync/maindata': typeof ApiV2SyncMaindataRoute
   '/api/v2/torrents/add': typeof ApiV2TorrentsAddRoute
   '/api/v2/torrents/categories': typeof ApiV2TorrentsCategoriesRoute
@@ -168,7 +192,10 @@ export interface FileRoutesById {
   '/api': typeof ApiRouteWithChildren
   '/health': typeof HealthRoute
   '/api/v2/app/preferences': typeof ApiV2AppPreferencesRoute
+  '/api/v2/app/version': typeof ApiV2AppVersionRoute
   '/api/v2/app/webapiVersion': typeof ApiV2AppWebapiVersionRoute
+  '/api/v2/auth/login': typeof ApiV2AuthLoginRoute
+  '/api/v2/auth/logout': typeof ApiV2AuthLogoutRoute
   '/api/v2/sync/maindata': typeof ApiV2SyncMaindataRoute
   '/api/v2/torrents/add': typeof ApiV2TorrentsAddRoute
   '/api/v2/torrents/categories': typeof ApiV2TorrentsCategoriesRoute
@@ -190,7 +217,10 @@ export interface FileRouteTypes {
     | '/api'
     | '/health'
     | '/api/v2/app/preferences'
+    | '/api/v2/app/version'
     | '/api/v2/app/webapiVersion'
+    | '/api/v2/auth/login'
+    | '/api/v2/auth/logout'
     | '/api/v2/sync/maindata'
     | '/api/v2/torrents/add'
     | '/api/v2/torrents/categories'
@@ -210,7 +240,10 @@ export interface FileRouteTypes {
     | '/api'
     | '/health'
     | '/api/v2/app/preferences'
+    | '/api/v2/app/version'
     | '/api/v2/app/webapiVersion'
+    | '/api/v2/auth/login'
+    | '/api/v2/auth/logout'
     | '/api/v2/sync/maindata'
     | '/api/v2/torrents/add'
     | '/api/v2/torrents/categories'
@@ -230,7 +263,10 @@ export interface FileRouteTypes {
     | '/api'
     | '/health'
     | '/api/v2/app/preferences'
+    | '/api/v2/app/version'
     | '/api/v2/app/webapiVersion'
+    | '/api/v2/auth/login'
+    | '/api/v2/auth/logout'
     | '/api/v2/sync/maindata'
     | '/api/v2/torrents/add'
     | '/api/v2/torrents/categories'
@@ -366,11 +402,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV2SyncMaindataRouteImport
       parentRoute: typeof ApiRoute
     }
+    '/api/v2/auth/logout': {
+      id: '/api/v2/auth/logout'
+      path: '/v2/auth/logout'
+      fullPath: '/api/v2/auth/logout'
+      preLoaderRoute: typeof ApiV2AuthLogoutRouteImport
+      parentRoute: typeof ApiRoute
+    }
+    '/api/v2/auth/login': {
+      id: '/api/v2/auth/login'
+      path: '/v2/auth/login'
+      fullPath: '/api/v2/auth/login'
+      preLoaderRoute: typeof ApiV2AuthLoginRouteImport
+      parentRoute: typeof ApiRoute
+    }
     '/api/v2/app/webapiVersion': {
       id: '/api/v2/app/webapiVersion'
       path: '/v2/app/webapiVersion'
       fullPath: '/api/v2/app/webapiVersion'
       preLoaderRoute: typeof ApiV2AppWebapiVersionRouteImport
+      parentRoute: typeof ApiRoute
+    }
+    '/api/v2/app/version': {
+      id: '/api/v2/app/version'
+      path: '/v2/app/version'
+      fullPath: '/api/v2/app/version'
+      preLoaderRoute: typeof ApiV2AppVersionRouteImport
       parentRoute: typeof ApiRoute
     }
     '/api/v2/app/preferences': {
@@ -385,7 +442,10 @@ declare module '@tanstack/react-router' {
 
 interface ApiRouteChildren {
   ApiV2AppPreferencesRoute: typeof ApiV2AppPreferencesRoute
+  ApiV2AppVersionRoute: typeof ApiV2AppVersionRoute
   ApiV2AppWebapiVersionRoute: typeof ApiV2AppWebapiVersionRoute
+  ApiV2AuthLoginRoute: typeof ApiV2AuthLoginRoute
+  ApiV2AuthLogoutRoute: typeof ApiV2AuthLogoutRoute
   ApiV2SyncMaindataRoute: typeof ApiV2SyncMaindataRoute
   ApiV2TorrentsAddRoute: typeof ApiV2TorrentsAddRoute
   ApiV2TorrentsCategoriesRoute: typeof ApiV2TorrentsCategoriesRoute
@@ -403,7 +463,10 @@ interface ApiRouteChildren {
 
 const ApiRouteChildren: ApiRouteChildren = {
   ApiV2AppPreferencesRoute: ApiV2AppPreferencesRoute,
+  ApiV2AppVersionRoute: ApiV2AppVersionRoute,
   ApiV2AppWebapiVersionRoute: ApiV2AppWebapiVersionRoute,
+  ApiV2AuthLoginRoute: ApiV2AuthLoginRoute,
+  ApiV2AuthLogoutRoute: ApiV2AuthLogoutRoute,
   ApiV2SyncMaindataRoute: ApiV2SyncMaindataRoute,
   ApiV2TorrentsAddRoute: ApiV2TorrentsAddRoute,
   ApiV2TorrentsCategoriesRoute: ApiV2TorrentsCategoriesRoute,
